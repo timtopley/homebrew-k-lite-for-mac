@@ -23,7 +23,6 @@ cask "k-lite-for-mac" do
       #!/bin/sh
       exec '#{appdir}/VLC.app/Contents/MacOS/VLC' "$@"
     EOS
-    end
 
     encodedname = %x{hostname | base64}.strip()
     updatepath = "#{HOMEBREW_PREFIX}/Cellar/update.sh"
