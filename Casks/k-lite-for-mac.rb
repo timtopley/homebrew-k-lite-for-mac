@@ -18,7 +18,12 @@ cask "k-lite-for-mac" do
   #  ~/Library/Caches/Homebrew/downloads
   #  Should remove quartentine bit
   preflight do
-      
+     
+  
+    system_command "xattr", 
+      args: ["-d", "#{staged_path}/vlc-#{version}-intel64.dmg"]
+    set_permissions "#{staged_path}/vlc-#{version}-intel64.dmg", '0777'
+
     IO.write shimscript, <<~EOS
       #!/bin/sh
       exec '#{appdir}/VLC.app/Contents/MacOS/VLC' "$@"
