@@ -11,7 +11,8 @@ cask "k-lite-for-mac" do
 
   app "VLC.app"
   #shimscript = "#{staged_path}/vlc.wrapper.sh"
-  binary vshim, target: "#{HOMEBREW_PREFIX}/Cellar/vlc-klite"
+  #binary shimscript, target: "#{HOMEBREW_PREFIX}/Cellar/vlc-klite"
+  binary shimscript, target: "vlc"
 
 
   # the following are actions performed while in the download dir
