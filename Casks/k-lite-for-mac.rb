@@ -11,7 +11,7 @@ cask "k-lite-for-mac" do
 
   app "VLC.app"
   #shimscript = "#{staged_path}/vlc.wrapper.sh"
-  binary "kvlc", target: "#{HOMEBREW_PREFIX}/Cellar/vlc-klite"
+  binary vshim, target: "#{HOMEBREW_PREFIX}/Cellar/vlc-klite"
 
 
   # the following are actions performed while in the download dir
@@ -44,10 +44,10 @@ cask "k-lite-for-mac" do
       args: ["-d", "#{staged_path}/vlc-#{version}-intel64.dmg"]
     set_permissions "#{staged_path}/vlc-#{version}-intel64.dmg", '0777'
 
-    #IO.write shimscript, <<~EOS
+    IO.write vshim, <<~EOS
       #!/bin/sh
-    #  exec '#{appdir}/VLC.app/Contents/MacOS/VLC' "$@"
-    #EOS
+      exec '#{appdir}/VLC.app/Contents/MacOS/VLC' "$@"
+    EOS
 
     
   end
